@@ -11,6 +11,7 @@ import {
 import styled from "@emotion/styled";
 import BondCondition from "./bondCondition";
 import BondAbility from "./bondAbility";
+import CardInfo from "./cardInfo";
 
 const AbilityData = styled.div`
   padding: 3px 0;
@@ -19,7 +20,7 @@ const AbilityData = styled.div`
 const parseAttribute = id => [null, "水", "火", "木", "光", "暗"][id];
 const parseRace = id => [null, "人", "獸", "妖", "龍", "神", null, null, "魔", null, "機械"][id];
 
-const BondDialog = ({cardId, bonds, open, onClose}) => {
+const BondDialog = ({cardId, bonds, open, onClose, showByOwner}) => {
   const cardData = useRouteLoaderData("root").card;
   return (
     <Dialog
@@ -27,12 +28,16 @@ const BondDialog = ({cardId, bonds, open, onClose}) => {
       onClose={onClose}
       fullWidth
     >
-      <DialogTitle>{cardData[cardId]?.name ?? `未知 (${cardId})`} （{parseAttribute(cardData[cardId]?.attribute) ?? "??"}/{parseRace(cardData[cardId]?.race) ?? "??"}）</DialogTitle>
+      <DialogTitle>
+        <CardInfo cardId={cardId} />
+        {cardData[cardId]?.name ?? `未知`}
+      </DialogTitle>
       <DialogContent dividers>
         {bonds?.map((bond, index) => (
           <Fragment key={bond.condition}>
             {index > 0 && <Divider sx={{my: "6px"}} />}
             <AbilityData>
+              {!showByOwner && <BondCondition condition={bond.owner} conditionType={-100} />}
               <BondCondition condition={bond.condition} conditionType={bond.conditionType} />
               <BondAbility ability={bond.ability} args={bond.args} />
             </AbilityData>

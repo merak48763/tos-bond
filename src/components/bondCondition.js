@@ -10,6 +10,13 @@ const ConditionText = styled.div`
 const BondCondition = ({condition, conditionType}) => {
   const card = useRouteLoaderData("root")?.card ?? [];
   switch(conditionType) {
+    case -100:
+      return (
+        <ConditionText>
+          持有者：
+          <CardText id={condition} name={card[condition]?.name} />
+        </ConditionText>
+      );
     case 1:
       return (
         <ConditionText>
