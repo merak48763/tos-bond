@@ -5,7 +5,7 @@ const AbilityText = styled.div`
 `;
 
 const parseElement = id => [null, "水", "火", "木", "光", "暗"][id] ?? "??";
-const parseRace = id => [null, "人族", "獸族", "妖族", "龍族", "神族",null ,null ,"魔族",null ,"機械族"][id] ?? "??族"
+const parseRace = id => [null, "人族", "獸族", "妖族", "龍族", "神族",null ,null ,"魔族",null ,"機械族"][id] ?? "??族";
 
 const parseAbility = (id, [arg0, arg1]) => {
   switch(id) {

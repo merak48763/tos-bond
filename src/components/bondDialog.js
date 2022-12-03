@@ -16,6 +16,9 @@ const AbilityData = styled.div`
   padding: 3px 0;
 `;
 
+const parseAttribute = id => [null, "水", "火", "木", "光", "暗"][id];
+const parseRace = id => [null, "人", "獸", "妖", "龍", "神", null, null, "魔", null, "機械"][id];
+
 const BondDialog = ({cardId, bonds, open, onClose}) => {
   const cardData = useRouteLoaderData("root").card;
   return (
@@ -24,7 +27,7 @@ const BondDialog = ({cardId, bonds, open, onClose}) => {
       onClose={onClose}
       fullWidth
     >
-      <DialogTitle>{cardData[cardId]?.name ?? `未知 (${cardId})`}</DialogTitle>
+      <DialogTitle>{cardData[cardId]?.name ?? `未知 (${cardId})`} （{parseAttribute(cardData[cardId]?.attribute) ?? "??"}/{parseRace(cardData[cardId]?.race) ?? "??"}）</DialogTitle>
       <DialogContent dividers>
         {bonds?.map((bond, index) => (
           <Fragment key={bond.condition}>

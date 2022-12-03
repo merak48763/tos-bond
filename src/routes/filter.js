@@ -12,8 +12,6 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import NavBar from "../components/navBar";
 
-import filterConfig from "../data/filterConfig.json";
-
 const AppWrapper = styled.div`
   margin: 0 10px;
   display: flex;
@@ -34,13 +32,14 @@ const TagButton = styled(ToggleButton)`
 
 const loader = async () => {
   try {
-    const [bondRes, monsterRes] = await Promise.all([
+    const [bondRes, monsterRes, configRes] = await Promise.all([
       axios.get("https://merak48763.github.io/tool_data/data/bond.json"),
-      axios.get("https://merak48763.github.io/tool_data/data/monster.json")
+      axios.get("https://merak48763.github.io/tool_data/data/monster.json"),
+      axios.get("https://merak48763.github.io/tool_data/config/tos-bond.json")
     ]);
     const groupedFilter = {};
     const filterValues = {};
-    filterConfig.filters.forEach(rule => {
+    configRes.data.filters.forEach(rule => {
       if(rule.group in groupedFilter)
         groupedFilter[rule.group].push({
           id: rule.id,
