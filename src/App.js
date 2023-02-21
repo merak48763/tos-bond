@@ -2,22 +2,22 @@ import {
   createHashRouter as createRouter,
   RouterProvider
 } from "react-router-dom";
-import Filter, { loader as filterLoader } from "./routes/filter";
-import Result, { loader as resultLoader } from "./routes/result";
+import Root from "./routes/root";
 
 import "@fontsource/roboto";
 
 const router = createRouter([
   {
     path: "/",
-    element: <Filter />,
-    loader: filterLoader,
-    id: "root",
+    element: <Root />,
     children: [
       {
-        path: ":query",
-        element: <Result />,
-        loader: resultLoader
+        path: "ability",
+        element: <div>ability</div>
+      },
+      {
+        path: "condition",
+        element: <div>condition</div>
       }
     ]
   }
