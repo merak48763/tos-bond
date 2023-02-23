@@ -26,6 +26,6 @@ const Card = ({name, id}) => {
       <CardImage src={cardImageUrl(id)} alt={name}/>
     </Tooltip>
   );
-};
+}
 
 export default Card;

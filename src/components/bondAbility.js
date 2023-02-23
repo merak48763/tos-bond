@@ -58,12 +58,12 @@ const parseAbility = (id, [arg0, arg1]) => {
     default:
       return `羈絆能力 #${id}\n【資料未更新】`;
   }
-};
+}
 
 const BondAbility = ({ability, args}) => {
   return (
     <AbilityText>{parseAbility(ability, args)}</AbilityText>
   );
-};
+}
 
-export default BondAbility
+export default BondAbility;

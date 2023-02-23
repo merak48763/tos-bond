@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import NavBar from "../components/navBar";
 import styled from "@emotion/styled";
 import axios from "axios";
+import filterConfig from "../data/filterConfig.json";
 
 const LoadingPageContainer = styled.div`
   height: 100vh;
@@ -16,7 +17,8 @@ const LoadingPageContainer = styled.div`
   }
 `;
 const AppWrapper = styled.div`
-  margin: 10px;
+  margin: 16px;
+  padding-bottom: 40px;
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
@@ -28,7 +30,8 @@ const RootPage = () => {
   const [loading, setLoading] = useState(true);
   const [bondByAbility, setBondByAbility] = useState([]);
   const [bondByCondition, setBondByCondition] = useState([]);
-  const [cardData, setCardData] = useState([]);
+  const [cardData, setCardData] = useState({});
+  const [filterTag, setFilterTag] = useState([]);
 
   useEffect(() => {
     Promise.all([
@@ -42,7 +45,7 @@ const RootPage = () => {
           byAbility.push([bond.ability, [bond]]);
         }
         else {
-          byAbility[1].push(bond);
+          abilityEntry[1].push(bond);
         }
 
         const conditionEntry = byCondition.find(e => e[0] === bond.condition);
@@ -50,15 +53,28 @@ const RootPage = () => {
           byCondition.push([bond.condition, [bond]]);
         }
         else {
-          byCondition[1].push(bond);
+          conditionEntry[1].push(bond);
         }
       });
+      byAbility.sort((a, b) => a[0] - b[0]);
+      byCondition.sort((a, b) => a[0] - b[0]);
 
-      const cards = Object.entries(monsterRes.data.monster).map(([k, v]) => [parseInt(k), v]);
+      const cards = monsterRes.data.monster;
+
+      const groupedTag = {};
+      filterConfig.forEach(rule => {
+        if(rule.group in groupedTag) {
+          groupedTag[rule.group].push(rule);
+        }
+        else {
+          groupedTag[rule.group] = [rule];
+        }
+      });
 
       setBondByAbility(byAbility);
       setBondByCondition(byCondition);
       setCardData(cards);
+      setFilterTag(Object.values(groupedTag));
       setLoading(false);
     });
   }, []);
@@ -79,7 +95,8 @@ const RootPage = () => {
         <Outlet context={{
           bondByAbility,
           bondByCondition,
-          cardData
+          cardData,
+          filterTag
         }} />
       </AppWrapper>
     </>

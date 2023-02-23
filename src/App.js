@@ -2,10 +2,20 @@ import {
   createHashRouter as createRouter,
   RouterProvider
 } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material";
 import Root from "./routes/root";
+import AbilityFilter from "./routes/byAbility";
+import ConditionFilter from "./routes/byCondition";
 
 import "@fontsource/roboto";
 
+const theme = createTheme({
+  typography: {
+    button: {
+      textTransform: "none"
+    }
+  }
+});
 const router = createRouter([
   {
     path: "/",
@@ -13,11 +23,11 @@ const router = createRouter([
     children: [
       {
         path: "ability",
-        element: <div>ability</div>
+        element: <AbilityFilter />
       },
       {
         path: "condition",
-        element: <div>condition</div>
+        element: <ConditionFilter />
       }
     ]
   }
@@ -25,7 +35,9 @@ const router = createRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 

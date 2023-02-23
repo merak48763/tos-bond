@@ -31,6 +31,6 @@ const CardItem = ({name, cardId, onClick}) => {
       <CardLabel>{cardId}</CardLabel>
     </CardWrapper>
   );
-};
+}
 
 export default CardItem;

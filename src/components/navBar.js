@@ -19,6 +19,6 @@ const NavBar = () => {
       </Tabs>
     </AppBar>
   );
-};
+}
 
 export default NavBar;

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { useRouteLoaderData } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import {
   Button,
   Dialog,
@@ -17,28 +17,21 @@ const AbilityData = styled.div`
   padding: 3px 0;
 `;
 
-const parseAttribute = id => [null, "水", "火", "木", "光", "暗"][id];
-const parseRace = id => [null, "人", "獸", "妖", "龍", "神", null, null, "魔", null, "機械"][id];
-
 const BondDialog = ({cardId, bonds, open, onClose, showByOwner}) => {
-  const cardData = useRouteLoaderData("root").card;
+  const {cardData} = useOutletContext();
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-    >
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>
         <CardInfo cardId={cardId} />
         {cardData[cardId]?.name ?? `未知`}
       </DialogTitle>
       <DialogContent dividers>
         {bonds?.map((bond, index) => (
-          <Fragment key={bond.condition}>
+          <Fragment key={showByOwner ? bond.condition : bond.owner}>
             {index > 0 && <Divider sx={{my: "6px"}} />}
             <AbilityData>
               {!showByOwner && <BondCondition condition={bond.owner} conditionType={-100} />}
-              <BondCondition condition={bond.condition} conditionType={bond.conditionType} />
+              <BondCondition condition={bond.condition} conditionType={bond.conditionType} fullText={showByOwner} />
               <BondAbility ability={bond.ability} args={bond.args} />
             </AbilityData>
           </Fragment>
@@ -49,6 +42,6 @@ const BondDialog = ({cardId, bonds, open, onClose, showByOwner}) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default BondDialog;

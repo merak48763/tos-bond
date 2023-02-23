@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRouteLoaderData } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import CardText from "./cardText";
 
 const ConditionText = styled.div`
@@ -7,36 +7,42 @@ const ConditionText = styled.div`
   padding-bottom: 8px;
 `;
 
-const BondCondition = ({condition, conditionType}) => {
-  const card = useRouteLoaderData("root")?.card ?? [];
+const BondCondition = ({condition, conditionType, fullText}) => {
+  const {cardData} = useOutletContext();
   switch(conditionType) {
     case -100:
       return (
         <ConditionText>
-          持有者：
-          <CardText id={condition} name={card[condition]?.name} />
+          羈絆持有者：
+          <CardText id={condition} name={cardData[condition]?.name} />
         </ConditionText>
       );
     case 1:
-      return (
+      return fullText ? (
         <ConditionText>
-          條件：擁有
-          <CardText id={condition} name={card[condition]?.name} />
+          解鎖條件：擁有
+          <CardText id={condition} name={cardData[condition]?.name} />
         </ConditionText>
+      ) : (
+        <ConditionText>解鎖條件：擁有此卡</ConditionText>
       );
     case 2:
-      return (
+      return fullText ? (
         <ConditionText>
-          條件：擁有 Dual Max
-          <CardText id={condition} name={card[condition]?.name} />
+          解鎖條件：擁有 Dual Max
+          <CardText id={condition} name={cardData[condition]?.name} />
         </ConditionText>
+      ) : (
+        <ConditionText>解鎖條件：此卡為 Dual Max</ConditionText>
       );
     case 3:
-      return (
+      return fullText ? (
         <ConditionText>
-          條件：擁有 All Max
-          <CardText id={condition} name={card[condition]?.name} />
+          解鎖條件：擁有 All Max
+          <CardText id={condition} name={cardData[condition]?.name} />
         </ConditionText>
+      ) : (
+        <ConditionText>解鎖條件：此卡為 All Max</ConditionText>
       );
     default:
       return (
@@ -45,6 +51,6 @@ const BondCondition = ({condition, conditionType}) => {
         </ConditionText>
       );
   }
-};
+}
 
 export default BondCondition;
