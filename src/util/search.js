@@ -11,8 +11,8 @@ const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData) => 
   const result = [];
   let index = 0;
   abilityList.forEach(ability => {
-    while(ability > bondByAbility[index][0]) ++index;
-    if(ability < bondByAbility[index][0]) return;
+    while(index < bondByAbility.length && ability > bondByAbility[index][0]) ++index;
+    if(index >= bondByAbility.length || ability < bondByAbility[index][0]) return;
     result.push(...bondByAbility[index][1]);
   });
 
