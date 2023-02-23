@@ -9,12 +9,17 @@ const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData) => 
   const abilityList = [...abilitySet].sort((a, b) => a - b);
 
   const result = [];
-  let index = 0;
-  abilityList.forEach(ability => {
-    while(index < bondByAbility.length && ability > bondByAbility[index][0]) ++index;
-    if(index >= bondByAbility.length || ability < bondByAbility[index][0]) return;
-    result.push(...bondByAbility[index][1]);
-  });
+  if(abilityList.length > 0) {
+    let index = 0;
+    abilityList.forEach(ability => {
+      while(index < bondByAbility.length && ability > bondByAbility[index][0]) ++index;
+      if(index >= bondByAbility.length || ability < bondByAbility[index][0]) return;
+      result.push(...bondByAbility[index][1]);
+    });
+  }
+  else {
+    bondByAbility.forEach(entry => result.push(entry[1]));
+  }
 
   const groupedResult = [];
   result.filter(bond => {
