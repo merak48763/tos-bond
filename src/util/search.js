@@ -18,7 +18,7 @@ const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData) => 
     });
   }
   else {
-    bondByAbility.forEach(entry => result.push(entry[1]));
+    bondByAbility.forEach(entry => result.push(...entry[1]));
   }
 
   const groupedResult = [];
