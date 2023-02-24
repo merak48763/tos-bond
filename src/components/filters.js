@@ -135,4 +135,27 @@ const AbilityFilter = ({filterTag, value, setValue}) => {
   );
 }
 
-export { AttributeFilter, RaceFilter, AbilityFilter };
+const RarityFilter = ({value, setValue}) => {
+  return (
+    <FilterWrapper>
+      <TitleWrapper>
+        <Typography variant="h6" component="div" sx={{mr: 3}}>稀有度</Typography>
+        <Tooltip title="清除">
+          <IconButton onClick={() => setValue([])}>
+            <ResetIcon />
+          </IconButton>
+        </Tooltip>
+      </TitleWrapper>
+      <TagGroup value={value} onChange={(_, newValue) => setValue(newValue)}>
+        {createToggleButtons([
+          [5, "5 ★"],
+          [6, "6 ★"],
+          [7, "7 ★"],
+          [8, "8 ★"]
+        ])}
+      </TagGroup>
+    </FilterWrapper>
+  );
+}
+
+export { AttributeFilter, RaceFilter, AbilityFilter, RarityFilter };

@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 const cardImageUrl = id => `https://merak48763.github.io/tool_data/image/monster/${id}.png`;
 
 const CardImage = styled.img`
+  box-sizing: content-box;
   width: 2em;
   height: 2em;
   padding: 0 .2em;
@@ -22,7 +23,7 @@ const tooltipModifier = [
 
 const Card = ({name, id}) => {
   return (
-    <Tooltip title={`${id} ${name ?? "未知"}`} PopperProps={{modifiers: tooltipModifier}}>
+    <Tooltip enterTouchDelay={0} title={`${id} ${name ?? "未知"}`} PopperProps={{modifiers: tooltipModifier}}>
       <CardImage src={cardImageUrl(id)} alt={name}/>
     </Tooltip>
   );

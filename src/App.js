@@ -2,20 +2,13 @@ import {
   createHashRouter as createRouter,
   RouterProvider
 } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material";
+import ThemeProvider from "./theme/provider";
 import Root from "./routes/root";
 import AbilityFilter from "./routes/byAbility";
 import ConditionFilter from "./routes/byCondition";
 
 import "@fontsource/roboto";
 
-const theme = createTheme({
-  typography: {
-    button: {
-      textTransform: "none"
-    }
-  }
-});
 const router = createRouter([
   {
     path: "/",
@@ -35,7 +28,7 @@ const router = createRouter([
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <RouterProvider router={router} />
     </ThemeProvider>
   );

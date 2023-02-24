@@ -18,16 +18,15 @@ const CardImage = styled.img`
 `;
 
 const CardLabel = styled.div`
-  background-color: rgba(0 0 0 / .8);
+  background-color: rgba(50 50 50);
   color: white;
   font-family: Roboto;
-  padding: 1px 0;
 `;
 
-const CardItem = ({name, cardId, onClick}) => {
+const CardItem = ({cardId, onClick}) => {
   return (
     <CardWrapper>
-      <CardImage src={cardImageUrl(cardId)} alt={name} onClick={onClick}/>
+      <CardImage src={cardImageUrl(cardId)} alt={cardId} onClick={onClick}/>
       <CardLabel>{cardId}</CardLabel>
     </CardWrapper>
   );

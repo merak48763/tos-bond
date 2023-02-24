@@ -19,7 +19,7 @@ const ByConditionPage = () => {
   return <>
     <AttributeFilter value={filterA} setValue={setFilterA} />
     <RaceFilter value={filterR} setValue={setFilterR} />
-    <Button color="primary" size="large" variant="contained" startIcon={<SearchIcon />} onClick={handleSearch}>搜尋</Button>
+    <Button sx={{mt: 2}} color="primary" size="large" variant="contained" startIcon={<SearchIcon />} onClick={handleSearch}>搜尋</Button>
     <CardList groupedSearchResult={result} isShowingOwner={false} />
   </>;
 }

@@ -1,6 +1,4 @@
-import filterConfig from "../data/filterConfig.json";
-
-const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData) => {
+const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData, filterConfig) => {
   const abilitySet = new Set();
   filterS.forEach(tagId => {
     const abilities = filterConfig.find(f => f.id === tagId).values;

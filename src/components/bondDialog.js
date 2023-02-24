@@ -30,8 +30,8 @@ const BondDialog = ({cardId, bonds, open, onClose, showByOwner}) => {
           <Fragment key={showByOwner ? bond.condition : bond.owner}>
             {index > 0 && <Divider sx={{my: "6px"}} />}
             <AbilityData>
-              {!showByOwner && <BondCondition condition={bond.owner} conditionType={-100} />}
               <BondCondition condition={bond.condition} conditionType={bond.conditionType} fullText={showByOwner} />
+              {!showByOwner && <BondCondition condition={bond.owner} conditionType={-100} />}
               <BondAbility ability={bond.ability} args={bond.args} />
             </AbilityData>
           </Fragment>
