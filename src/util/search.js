@@ -1,6 +1,6 @@
-const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData, filterConfig) => {
+const searchByAbility = (attrFilter, raceFilter, rarityFilter, skillFilter, bondByAbility, cardData, filterConfig) => {
   const abilitySet = new Set();
-  filterS.forEach(tagId => {
+  skillFilter.forEach(tagId => {
     const abilities = filterConfig.find(f => f.id === tagId).values;
     abilities.forEach(a => abilitySet.add(a));
   });
@@ -22,13 +22,17 @@ const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData, fil
   const groupedResult = [];
   result.filter(bond => {
     const card = cardData[bond.owner];
-    if(filterA.length > 0) {
+    if(attrFilter.length > 0) {
       if(!card) return false;
-      if(!filterA.includes(card.attribute)) return false;
+      if(!attrFilter.includes(card.attribute)) return false;
     }
-    if(filterR.length > 0) {
+    if(raceFilter.length > 0) {
       if(!card) return false;
-      if(!filterR.includes(card.race)) return false;
+      if(!raceFilter.includes(card.race)) return false;
+    }
+    if(rarityFilter.length > 0) {
+      if(!card) return false;
+      if(!rarityFilter.includes(card.rarity)) return false;
     }
     return true;
   }).sort((a, b) => a.owner - b.owner).forEach(bond => {
@@ -43,17 +47,21 @@ const searchByAbility = (filterA, filterR, filterS, bondByAbility, cardData, fil
   return groupedResult;
 }
 
-const searchByCondition = (filterA, filterR, bondByCondition, cardData) => {
+const searchByCondition = (attrFilter, raceFilter, rarityFilter, bondByCondition, cardData) => {
   const groupedResult = [];
   bondByCondition.forEach(entry => {
     const card = cardData[entry[0]];
-    if(filterA.length > 0) {
+    if(attrFilter.length > 0) {
       if(!card) return;
-      if(!filterA.includes(card.attribute)) return;
+      if(!attrFilter.includes(card.attribute)) return;
     }
-    if(filterR.length > 0) {
+    if(raceFilter.length > 0) {
       if(!card) return;
-      if(!filterR.includes(card.race)) return;
+      if(!raceFilter.includes(card.race)) return;
+    }
+    if(rarityFilter.length > 0) {
+      if(!card) return;
+      if(!rarityFilter.includes(card.rarity)) return;
     }
     groupedResult.push(entry);
   });
