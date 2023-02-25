@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Typography, Fab } from "@mui/material";
-import { Brightness6Outlined as BrightnessIcon } from "@mui/icons-material";
+import { Typography, Fab, Tooltip } from "@mui/material";
+import { Brightness6Outlined as BrightnessIcon, Inventory2Outlined as InventoryIcon } from "@mui/icons-material";
 import { useDarkModeConfig } from "../theme/provider";
 import NavBar from "../components/navBar";
+import DevOnly from "../components/devOnly";
 import styled from "@emotion/styled";
 import axios from "axios";
 
@@ -94,7 +95,7 @@ const RootPage = () => {
 
   return (loading
     ? <LoadingPageContainer>
-      <Typography variant="h5" component="div">資料載入中</Typography>
+      <Typography variant="h5" component="div">資料載入中…</Typography>
     </LoadingPageContainer>
     : <>
       <NavBar />
@@ -107,13 +108,26 @@ const RootPage = () => {
           filterConfig
         }} />
       </AppWrapper>
-      <Fab color="primary" sx={{
-        position: "fixed",
-        bottom: 16,
-        right: 16
-      }} onClick={toggleDarkMode}>
-        <BrightnessIcon />
-      </Fab>
+      <Tooltip placement="left" arrow title="切換主題">
+        <Fab color="primary" sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16
+        }} onClick={toggleDarkMode}>
+          <BrightnessIcon />
+        </Fab>
+      </Tooltip>
+      <DevOnly>
+        <Tooltip placement="left" arrow title="匯入背包">
+          <Fab color="primary" sx={{
+            position: "fixed",
+            bottom: 86,
+            right: 16
+          }}>
+            <InventoryIcon />
+          </Fab>
+        </Tooltip>
+      </DevOnly>
     </>
   );
 }

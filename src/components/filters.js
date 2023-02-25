@@ -1,6 +1,7 @@
 import React from "react";
 import {
   ToggleButton,
+  ToggleButtonGroup,
   IconButton,
   Tooltip,
   Typography
@@ -30,10 +31,14 @@ const TagButton = styled(ToggleButton)`
   margin: 4px;
   width: 10em;
 `;
+const SwitchButton = styled(ToggleButton)`
+  padding: 4px 6px;
+  width: 7em;
+`;
 
-const createToggleButtons = entries => {
+const createToggleButtons = (entries, Component=TagButton) => {
   return entries.map(entry => (
-    <TagButton key={entry[0]} value={entry[0]} disableRipple>{entry[1]}</TagButton>
+    <Component key={entry[0]} value={entry[0]} disableRipple>{entry[1]}</Component>
   ));
 }
 
@@ -115,26 +120,6 @@ const RaceFilter = ({value, setValue}) => {
   );
 }
 
-const AbilityFilter = ({filterTag, value, setValue}) => {
-  return (
-    <FilterWrapper>
-      <TitleWrapper>
-        <Typography variant="h6" component="div" sx={{mr: 3}}>能力</Typography>
-        <Tooltip title="清除">
-          <IconButton onClick={() => setValue([])}>
-            <ResetIcon />
-          </IconButton>
-        </Tooltip>
-      </TitleWrapper>
-      {filterTag.map((group, i) => (
-        <TagGroup key={i} value={value} onChange={(_, newValue) => setValue(newValue)}>
-          {createToggleButtons(group.map(rule => [rule.id, rule.tag]))}
-        </TagGroup>
-      ))}
-    </FilterWrapper>
-  );
-}
-
 const RarityFilter = ({value, setValue}) => {
   return (
     <FilterWrapper>
@@ -158,4 +143,40 @@ const RarityFilter = ({value, setValue}) => {
   );
 }
 
-export { AttributeFilter, RaceFilter, AbilityFilter, RarityFilter };
+const InventoryFilter = ({value, setValue, disabled}) => {
+  return (
+    <FilterWrapper>
+      <TitleWrapper>
+        <Typography variant="h6" component="div">篩選</Typography>
+      </TitleWrapper>
+      <ToggleButtonGroup exclusive value={!disabled && value} onChange={(_, newValue) => setValue(newValue ?? value)} disabled={disabled} color="primary">
+        {createToggleButtons([
+          [false, "全部顯示"],
+          [true, "僅背包"]
+        ], SwitchButton)}
+      </ToggleButtonGroup>
+    </FilterWrapper>
+  );
+}
+
+const AbilityFilter = ({filterTag, value, setValue}) => {
+  return (
+    <FilterWrapper>
+      <TitleWrapper>
+        <Typography variant="h6" component="div" sx={{mr: 3}}>能力</Typography>
+        <Tooltip title="清除">
+          <IconButton onClick={() => setValue([])}>
+            <ResetIcon />
+          </IconButton>
+        </Tooltip>
+      </TitleWrapper>
+      {filterTag.map((group, i) => (
+        <TagGroup key={i} value={value} onChange={(_, newValue) => setValue(newValue)}>
+          {createToggleButtons(group.map(rule => [rule.id, rule.tag]))}
+        </TagGroup>
+      ))}
+    </FilterWrapper>
+  );
+}
+
+export { AttributeFilter, RaceFilter, RarityFilter, InventoryFilter, AbilityFilter };
