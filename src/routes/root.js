@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Typography, Fab, Tooltip } from "@mui/material";
-import { Brightness6Outlined as BrightnessIcon, Inventory2Outlined as InventoryIcon } from "@mui/icons-material";
+import { Brightness6Outlined as BrightnessIcon } from "@mui/icons-material";
 import { useDarkModeConfig } from "../theme/provider";
 import NavBar from "../components/navBar";
+import InventoryFlow from "../components/inventoryFlow";
 import DevOnly from "../components/devOnly";
 import styled from "@emotion/styled";
 import axios from "axios";
@@ -118,15 +119,7 @@ const RootPage = () => {
         </Fab>
       </Tooltip>
       <DevOnly>
-        <Tooltip placement="left" arrow title="匯入背包">
-          <Fab color="primary" sx={{
-            position: "fixed",
-            bottom: 86,
-            right: 16
-          }}>
-            <InventoryIcon />
-          </Fab>
-        </Tooltip>
+        <InventoryFlow />
       </DevOnly>
     </>
   );

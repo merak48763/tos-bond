@@ -6,8 +6,10 @@ import { AttributeFilter, RaceFilter, RarityFilter, AbilityFilter, InventoryFilt
 import CardList from "../components/cardList";
 import DevOnly from "../components/devOnly";
 import { searchByAbility } from "../util/search";
+import { useCheckup } from "../util/checkup";
 
 const ByAbilityPage = () => {
+  const {inventory} = useCheckup();
   const [attrFilter, setAttrFilter] = useState([]);
   const [raceFilter, setRaceFilter] = useState([]);
   const [rarityFilter, setRarityFilter] = useState([]);
@@ -26,7 +28,7 @@ const ByAbilityPage = () => {
     <RaceFilter value={raceFilter} setValue={setRaceFilter} />
     <RarityFilter value={rarityFilter} setValue={setRarityFilter} />
     <DevOnly>
-      <InventoryFilter value={invFilter} setValue={setInvFilter} disabled />
+      <InventoryFilter value={invFilter} setValue={setInvFilter} disabled={!inventory} />
     </DevOnly>
     <Button sx={{mt: 2}} color="primary" size="large" variant="contained" startIcon={<SearchIcon />} onClick={handleSearch}>搜尋</Button>
     <CardList groupedSearchResult={result} isShowingOwner={true} />
