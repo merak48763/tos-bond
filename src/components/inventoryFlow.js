@@ -57,7 +57,7 @@ const InventoryState = () => {
   }
   return (
     <Box sx={{mb: 3}}>
-      <Typography>不提供活動驗證碼匯入背包的功能，需要在健檢中心設定「公開背包」才可以使用。</Typography>
+      <Typography>只用UID匯入背包的功能，需要在健檢中心設定「公開背包」才可以使用。</Typography>
     </Box>
   );
 }
