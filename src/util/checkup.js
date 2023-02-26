@@ -34,8 +34,23 @@ const CheckupContext = createContext({});
 const Provider = ({children}) => {
   const commonToken = useRef(undefined);
   const [inventory, setInventory] = useState(undefined);
-  // TODO: trim and sort the inventory in advance
-  const reducedInventory = useMemo(() => undefined, []);
+  const reducedInventory = useMemo(() => {
+    const entries = {};
+    inventory?.cards.forEach(card => {
+      if(card.id in entries) {
+        const existing = entries[card.id];
+        if(existing.lv > card.level) return;
+        if(existing.slv > card.skillLevel) return;
+        if(existing.enhance > card.enhanceLevel) return;
+      }
+      entries[card.id] = {
+        lv: card.level,
+        slv: card.skillLevel,
+        enhance: card.enhanceLevel
+      };
+    });
+    return entries;
+  }, [inventory]);
 
   const queryInventory = async targetUid => {
     if(commonToken.current === undefined) {
@@ -49,8 +64,12 @@ const Provider = ({children}) => {
   }
 
   const hasCard = (id, minLv=0, minSlv=0, minEnhance=0) => {
-    if(!inventory?.cards) return false;
-    return inventory.cards.some(card => card.id === id && card.level >= minLv && card.skillLevel >= minSlv && card.enhanceLevel >= minEnhance);
+    if(id in reducedInventory) {
+      return (reducedInventory[id].lv >= minLv
+        && reducedInventory[id].slv >= minSlv
+        && reducedInventory[id].enhance >= minEnhance);
+    }
+    return false;
   }
 
   return (

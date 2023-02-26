@@ -1,4 +1,4 @@
-const searchByAbility = (attrFilter, raceFilter, rarityFilter, skillFilter, bondByAbility, cardData, filterConfig) => {
+const searchByAbility = (attrFilter, raceFilter, rarityFilter, skillFilter, bondByAbility, cardData, filterConfig, inventoryFilterFunction) => {
   const abilitySet = new Set();
   skillFilter.forEach(tagId => {
     const abilities = filterConfig.find(f => f.id === tagId).values;
@@ -22,6 +22,7 @@ const searchByAbility = (attrFilter, raceFilter, rarityFilter, skillFilter, bond
   const groupedResult = [];
   result.filter(bond => {
     const card = cardData[bond.owner];
+    if(!inventoryFilterFunction(bond.owner)) return false;
     if(attrFilter.length > 0) {
       if(!card) return false;
       if(!attrFilter.includes(card.attribute)) return false;

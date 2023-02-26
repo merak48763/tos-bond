@@ -48,12 +48,18 @@ const InventoryState = () => {
   const {inventory} = useCheckup();
 
   if(inventory) {
-    return <>
-      <Typography>現在的背包：{inventory?._id}</Typography>
-      <Typography sx={{mb: 3}}>資料更新於：{new Date(inventory?.cardsUpdatedAt).toLocaleString()}</Typography>
-    </>;
+    return (
+      <Box sx={{mb: 3}}>
+        <Typography>現在的背包：{inventory?._id}</Typography>
+        <Typography>資料更新於：{new Date(inventory?.cardsUpdatedAt).toLocaleString()}</Typography>
+      </Box>
+    );
   }
-  return null;
+  return (
+    <Box sx={{mb: 3}}>
+      <Typography>不提供活動驗證碼匯入背包的功能，需要在健檢中心設定「公開背包」才可以使用。</Typography>
+    </Box>
+  );
 }
 
 const InventoryDialog = ({open, onClose}) => {
@@ -66,15 +72,27 @@ const InventoryDialog = ({open, onClose}) => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    if(open) setUpdateMode(false);
-    setMessage("");
-    setIsError(false);
+    if(open) {
+      setUpdateMode(false);
+      setMessage("");
+      setIsError(false);
+    }
   }, [open]);
   useEffect(() => {
     if(!updateMode) setAuthInput("");
   }, [updateMode]);
 
   const handleLoadInventory = async () => {
+    if(!uidInput.match(/^[1-9]\d{6,9}$/)) {
+      setMessage("請輸入UID");
+      setIsError(true);
+      return;
+    }
+    if(updateMode && !authInput.match(/^\d{6}$/)) {
+      setMessage("請輸入活動驗證碼");
+      setIsError(true);
+      return;
+    }
     setLoading(true);
     try {
       if(updateMode) {
@@ -87,7 +105,7 @@ const InventoryDialog = ({open, onClose}) => {
       setIsError(false);
     }
     catch {
-      setMessage(`${updateMode ? "更新" : "匯入"}背包失敗`);
+      setMessage(`${updateMode ? "更新" : "匯入"}背包失敗${updateMode ? "" : "，請嘗試使用「更新」功能"}`);
       setIsError(true);
     }
     setLoading(false);

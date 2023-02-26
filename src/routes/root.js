@@ -5,7 +5,6 @@ import { Brightness6Outlined as BrightnessIcon } from "@mui/icons-material";
 import { useDarkModeConfig } from "../theme/provider";
 import NavBar from "../components/navBar";
 import InventoryFlow from "../components/inventoryFlow";
-import DevOnly from "../components/devOnly";
 import styled from "@emotion/styled";
 import axios from "axios";
 
@@ -90,7 +89,7 @@ const RootPage = () => {
 
   useEffect(() => {
     if(!loading && location.pathname === "/") {
-      navigate("/ability");
+      navigate("/ability", {replace: true});
     }
   }, [loading, navigate, location]);
 
@@ -118,9 +117,7 @@ const RootPage = () => {
           <BrightnessIcon />
         </Fab>
       </Tooltip>
-      <DevOnly>
-        <InventoryFlow />
-      </DevOnly>
+      <InventoryFlow />
     </>
   );
 }
