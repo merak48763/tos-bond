@@ -10,7 +10,7 @@ const parseRace = id => [null, "人族", "獸族", "妖族", "龍族", "神族",
 const parseAbility = (id, [arg0, arg1]) => {
   switch(id) {
     case 20001:
-      return `發動自身角色符石\n⇒ 將移動符石時觸碰的\n    首 ${arg0} 粒符石轉化為${parseRace(arg1)}符石`;
+      return `發動自身角色符石\n⇒ 將移動符石時觸碰的\n    首 ${arg0} 粒符石轉化為${parseElement(arg1)}符石`;
     case 20002:
       return `首批消除自身角色符石\n⇒ 個人以 ${arg0}% 攻擊力追打 ${arg1} 次`;
     case 20003:
