@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useThemeConfig } from "../theme/provider";
-import { cardImageUrl } from "./cardImage";
+import { cardImageUrl } from "../util/cardImage";
 
 const CardWrapper = styled.div`
   display: flex;

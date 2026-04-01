@@ -95,7 +95,7 @@ export { useCheckup };
 // For F12 testing
 if(process.env.NODE_ENV !== "production") {
   let token;
-  global.testInventory = async () => {
+  window.testInventory = async () => {
     if(!token) token = await getCommonToken();
     return await getInventory(token, "909964560");
   }

@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import styled from "@emotion/styled";
 import { useThemeConfig } from "../theme/provider";
-import { cardImageUrl } from "./cardImage";
+import { cardImageUrl } from "../util/cardImage";
 
 const CardImage = styled.img`
   box-sizing: content-box;

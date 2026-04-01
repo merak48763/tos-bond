@@ -9,8 +9,6 @@ import AbilityFilter from "./routes/byAbility";
 import ConditionFilter from "./routes/byCondition";
 import ErrorPage from "./routes/error";
 
-import "@fontsource/roboto";
-
 const router = createRouter([
   {
     path: "/",
