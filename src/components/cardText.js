@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import styled from "@emotion/styled";
-
-const cardImageUrl = id => `https://merak48763.github.io/tool_data/image/monster/${id}.png`;
+import { useThemeConfig } from "../theme/provider";
+import { cardImageUrl } from "./cardImage";
 
 const CardImage = styled.img`
   box-sizing: content-box;
@@ -22,9 +22,11 @@ const tooltipModifier = [
 ];
 
 const Card = ({name, id}) => {
+  const {isAprilFool} = useThemeConfig();
+
   return (
     <Tooltip enterTouchDelay={0} title={`${id} ${name ?? "未知"}`} PopperProps={{modifiers: tooltipModifier}}>
-      <CardImage src={cardImageUrl(id)} alt={name}/>
+      <CardImage src={cardImageUrl(id, isAprilFool)} alt={name}/>
     </Tooltip>
   );
 }

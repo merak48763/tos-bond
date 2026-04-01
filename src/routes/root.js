@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Typography, Fab, Tooltip } from "@mui/material";
 import { Brightness6Outlined as BrightnessIcon } from "@mui/icons-material";
-import { useDarkModeConfig } from "../theme/provider";
+import { useThemeConfig } from "../theme/provider";
 import NavBar from "../components/navBar";
 import InventoryFlow from "../components/inventoryFlow";
 import styled from "@emotion/styled";
@@ -37,7 +37,7 @@ const RootPage = () => {
   const [filterConfig, setFilterConfig] = useState([]);
   const [filterTag, setFilterTag] = useState([]);
 
-  const {toggleDarkMode} = useDarkModeConfig();
+  const {toggleDarkMode} = useThemeConfig();
 
   useEffect(() => {
     Promise.all([

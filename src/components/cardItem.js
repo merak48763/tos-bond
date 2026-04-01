@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-
-const cardImageUrl = id => `https://merak48763.github.io/tool_data/image/monster/${id}.png`;
+import { useThemeConfig } from "../theme/provider";
+import { cardImageUrl } from "./cardImage";
 
 const CardWrapper = styled.div`
   display: flex;
@@ -24,9 +24,11 @@ const CardLabel = styled.div`
 `;
 
 const CardItem = ({cardId, onClick}) => {
+  const {isAprilFool} = useThemeConfig();
+
   return (
     <CardWrapper>
-      <CardImage src={cardImageUrl(cardId)} alt={cardId} onClick={onClick}/>
+      <CardImage src={cardImageUrl(cardId, isAprilFool)} alt={cardId} onClick={onClick} />
       <CardLabel>{cardId}</CardLabel>
     </CardWrapper>
   );

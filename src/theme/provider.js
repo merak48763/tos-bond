@@ -10,6 +10,18 @@ const Provider = ({children}) => {
     setDarkMode(!darkMode);
   }
 
+  const isAprilFool = useMemo(() => {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Taipei",
+      month: "numeric",
+      day: "numeric"
+    }).formatToParts(new Date());
+    const month = parseInt(parts.find(p => p.type === "month").value);
+    const day = parseInt(parts.find(p => p.type === "day").value);
+
+    return month === 4 && day <= 2;
+  }, []);
+
   const theme = useMemo(() => createTheme({
     palette: {
       mode: darkMode ? "dark" : "light"
@@ -22,7 +34,7 @@ const Provider = ({children}) => {
   }), [darkMode]);
 
   return (
-    <ThemeContext.Provider value={{darkMode, toggleDarkMode}}>
+    <ThemeContext.Provider value={{darkMode, toggleDarkMode, isAprilFool}}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
@@ -31,7 +43,7 @@ const Provider = ({children}) => {
   );
 }
 
-const useDarkModeConfig = () => useContext(ThemeContext);
+const useThemeConfig = () => useContext(ThemeContext);
 
 export default Provider;
-export { useDarkModeConfig };
+export { useThemeConfig };
